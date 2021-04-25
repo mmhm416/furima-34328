@@ -4,18 +4,19 @@
 
 ## users テーブル
 
-| Column           | Type    | Options                   |
-| ---------------- | ------- | ------------------------- |
-| nickname         | string  | unique: true, null: false |
-| email            | string  | unique: true, null: false |
-| password         | string  | null: false               |
-| first_name       | string  | null: false               |
-| last_name        | string  | null: false               |
-| first_name_kana  | string  | null: false               |
-| last_name_kana   | string  | null: false               |
-| birth_year       | integer | null: false               |
-| birth_month      | integer | null: false               |
-| birth_day        | integer | null: false               |
+| Column             | Type    | Options                   |
+| ------------------ | ------- | ------------------------- |
+| nickname           | string  | unique: true, null: false |
+| email              | string  | unique: true, null: false |
+| password           | string  | null: false               |
+| encrypted_password | string  | null: false               |
+| first_name         | string  | null: false               |
+| last_name          | string  | null: false               |
+| first_name_kana    | string  | null: false               |
+| last_name_kana     | string  | null: false               |
+| birth_year         | integer | null: false               |
+| birth_month        | integer | null: false               |
+| birth_day          | integer | null: false               |
 
 ### Association
 - has_many :items
