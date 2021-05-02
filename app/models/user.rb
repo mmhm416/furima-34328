@@ -7,20 +7,21 @@ class User < ApplicationRecord
         with_options presence: true do
           validates :nickname
           validates :birthday
-          with_options format: {with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i} do
-            validates :password
-          end
-          with_options uniqueness: true do
-            validates :nickname
-            validates :email
-          end
-          with_options format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: "is invalid. Input full-width characters."} do
+          with_options format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: "is invalid. Input full-width characters"} do
             validates :first_name
             validates :last_name
           end
-          with_options format: {with: /\A[ァ-ヶー－]+\z/, message: "is invalid. Input full-width katakana characters."} do
+          with_options format: {with: /\A[ァ-ヶー－]+\z/, message: "is invalid. Input full-width katakana characters"} do
             validates :first_name_kana
             validates :last_name_kana
           end
         end
+        with_options uniqueness: { case_sensitive: true } do
+          validates :nickname
+          validates :email
+        end
+        with_options format: {with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: "Password Include both letters and numbers"} do
+          validates :password
+        end
+
   end
