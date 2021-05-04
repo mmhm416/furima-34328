@@ -13,7 +13,7 @@ RSpec.describe Item, type: :model do
     end
 
     context '出品できないとき' do
-      it 'imageが空では保存できないこと' do
+      it 'imageが空では登録できない' do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include "Image can't be blank"
@@ -29,27 +29,27 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include "Explanation can't be blank"
       end
       it 'category_idが--では登録できない' do
-        @item.category_id = '0'
+        @item.category_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Category Select')
       end
       it 'condition_idが--では登録できない' do
-        @item.condition_id = '0'
+        @item.condition_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include 'Condition Select'
       end
       it 'delivery_cost_idが--では登録できない' do
-        @item.delivery_cost_id = '0'
+        @item.delivery_cost_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include 'Delivery cost Select'
       end
       it 'prefecture_idが--では登録できない' do
-        @item.prefecture_id = '0'
+        @item.prefecture_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include 'Prefecture Select'
       end
       it 'delivery_time_idが--では登録できない' do
-        @item.delivery_time_id = '0'
+        @item.delivery_time_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include 'Delivery time Select'
       end
@@ -58,18 +58,28 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
-      it 'priceが半角数字以外では登録できない' do
+      it 'priceが全角文字では登録できない' do
         @item.price = '９００００'
         @item.valid?
         expect(@item.errors.full_messages).to include 'Price is not a number'
       end
+      it 'priceが半角英字では登録できない' do
+        @item.price = 'qwerty'
+        @item.valid?
+        expect(@item.errors.full_messages).to include 'Price is not a number'
+      end
+      it 'priceが半角英数字混合では登録できない' do
+        @item.price = 'qwe1234'
+        @item.valid?
+        expect(@item.errors.full_messages).to include 'Price is not a number'
+      end
       it 'priceが300未満では登録できない' do
-        @item.price = '299'
+        @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include 'Price must be greater than or equal to 300'
       end
       it 'priceが9,999,999超過では登録できない' do
-        @item.price = '99999999'
+        @item.price = 99_999_999
         @item.valid?
         expect(@item.errors.full_messages).to include 'Price must be less than or equal to 9999999'
       end
