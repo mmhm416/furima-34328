@@ -24,4 +24,5 @@ class User < ApplicationRecord
     validates :password
   end
   has_many :items
+  has_many :purchases
 end
