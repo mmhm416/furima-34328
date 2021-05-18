@@ -9,9 +9,13 @@ class PurchaseDelivery
     validates :address
     validates :phone_no
     validates :token
+    validates :user_id
+    validates :item_id
   end
 
   validates :prefecture_id, numericality: { other_than: 0, message: 'Select' }
+  validates :phone_no, length: { maximum: 11 }
+  validates :zip_code, format: { with: /\A\d{3}[-]\d{4}\z/, message: 'input must be of the form XXX-XXXX' } 
 
   def save
     purchase = Purchase.create(user_id: user_id, item_id: item_id)
