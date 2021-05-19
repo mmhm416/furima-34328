@@ -49,6 +49,21 @@ RSpec.describe Item, type: :model do
         @purchase_delivery.valid?
         expect(@purchase_delivery.errors.full_messages).to include "Phone no can't be blank"
       end
+      it '電話番号が英字では保存できないこと' do
+        @purchase_delivery.phone_no = 'aaabbbbcccc'
+        @purchase_delivery.valid?
+        expect(@purchase_delivery.errors.full_messages).to include 'Phone no is not a number'
+      end
+      it '電話番号が英数字混合では保存できないこと' do
+        @purchase_delivery.phone_no = '090aaaa1234'
+        @purchase_delivery.valid?
+        expect(@purchase_delivery.errors.full_messages).to include 'Phone no is not a number'
+      end
+      it '電話番号が全角数字では保存できないこと' do
+        @purchase_delivery.phone_no = '０９０１２３４５６７８'
+        @purchase_delivery.valid?
+        expect(@purchase_delivery.errors.full_messages).to include 'Phone no is not a number'
+      end
       it '電話番号が11桁以上では保存できないこと' do
         @purchase_delivery.phone_no = '090123456789'
         @purchase_delivery.valid?

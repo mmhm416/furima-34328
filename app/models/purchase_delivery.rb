@@ -14,6 +14,7 @@ class PurchaseDelivery
 
   validates :prefecture_id, numericality: { other_than: 0, message: 'Select' }
   validates :phone_no, length: { maximum: 11 }
+  validates :phone_no, numericality: { only_integer: true }
   validates :zip_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'input must be of the form XXX-XXXX' }
 
   def save
